@@ -157,4 +157,13 @@ class FunSetSuite extends FunSuite {
       assert(!exists(s1, x => x == 2))
     }
   }
+
+  test("mapping ++ to s12 results in s23") {
+    new TestSets {
+      assertContains(map(s12, x => x + 1), List(2,3), List(1,4))
+
+      // more readable test
+      assert(FunSets.toString(map(s12, x => x + 1)) === "{2,3}")
+    }
+  }
 }
