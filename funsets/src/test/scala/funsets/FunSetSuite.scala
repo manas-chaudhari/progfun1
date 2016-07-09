@@ -83,6 +83,11 @@ class FunSetSuite extends FunSuite {
     val s13 = union(s1, s3)
   }
 
+  def assertContains(set: Set, positive: List[Int], negative: List[Int]) {
+    positive.foreach { x => assert(contains(set, x), "contains " + x) }
+    negative.foreach { x => assert(!contains(set, x), "doesn't contain " + x) }
+  }
+
   /**
    * This test is currently disabled (by using "ignore") because the method
    * "singletonSet" is not yet implemented and the test would fail.
@@ -101,64 +106,34 @@ class FunSetSuite extends FunSuite {
        * The string argument of "assert" is a message that is printed in case
        * the test fails. This helps identifying which assertion failed.
        */
-      assert(contains(s1, 1), "contains 1")
-      assert(!contains(s1, 2), "does not contain 2")
+      assertContains(s1, List(1), List(2))
     }
   }
 
   test("singletonSet(2) contains only 2") {
     new TestSets {
-      assert(contains(s2, 2), "contains 2")
-      assert(!contains(s2, 3), "does not contain 3")
+      assertContains(s2, List(2), List(3))
     }
   }
 
   test("union contains all elements of each set") {
     new TestSets {
-      val s = union(s1, s2)
-      assert(contains(s, 1), "contains 1")
-      assert(contains(s, 2), "contains 2")
-      assert(!contains(s, 3), "does not contain 3")
-    }
-
-    new TestSets {
-      val s = union(s2, s3)
-      assert(!contains(s, 1), "does not contain 1")
-      assert(contains(s, 2), "contains 2")
-      assert(contains(s, 3), "contains 3")
-
+      assertContains(union(s1, s2), List(1, 2), List(3))
+      assertContains(union(s2, s3), List(2, 3), List(1))
     }
   }
 
   test("intersection contains only elements common to each set") {
     new TestSets {
-      val s = intersect(s12, s23)
-      assert(contains(s, 2), "contains 2")
-      assert(!contains(s, 1), "doesn't contain 1")
-      assert(!contains(s, 3), "doesn't contain 3")
-    }
-
-    new TestSets {
-      val s = intersect(s13, s23)
-      assert(contains(s, 3), "contains 3")
-      assert(!contains(s, 1), "doesn't contain 1")
-      assert(!contains(s, 2), "doesn't contain 2")
+      assertContains(intersect(s12, s23), List(2), List(1,3))
+      assertContains(intersect(s13, s23), List(3), List(1,2))
     }
   }
 
   test("diff contains elements not in intersection") {
     new TestSets {
-      val s = diff(s12, s23)
-      assert(contains(s, 1), "contains 1")
-      assert(!contains(s, 2), "doesn't contain 2")
-      assert(!contains(s, 3), "doesn't contain 3")
-    }
-
-    new TestSets {
-      val s = diff(s12, s13)
-      assert(contains(s, 2), "contains 2")
-      assert(!contains(s, 1), "doesn't contain 1")
-      assert(!contains(s, 3), "doesn't contain 3")
+      assertContains(diff(s12, s23), List(1), List(2,3))
+      assertContains(diff(s12, s13), List(2), List(1,3))
     }
   }
 }
