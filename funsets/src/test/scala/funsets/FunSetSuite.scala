@@ -150,4 +150,11 @@ class FunSetSuite extends FunSuite {
       assert(!forall(s12, x => x < 2), "All elements < 2")
     }
   }
+
+  test("1 exists in s1") {
+    new TestSets {
+      assert(exists(s1, x => x == 1))
+      assert(!exists(s1, x => x == 2))
+    }
+  }
 }
