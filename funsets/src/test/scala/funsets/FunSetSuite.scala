@@ -112,11 +112,17 @@ class FunSetSuite extends FunSuite {
   test("union contains all elements of each set") {
     new TestSets {
       val s = union(s1, s2)
-      assert(contains(s, 1), "Union 1")
-      assert(contains(s, 2), "Union 2")
-      assert(!contains(s, 3), "Union 3")
+      assert(contains(s, 1), "contains 1")
+      assert(contains(s, 2), "contains 2")
+      assert(!contains(s, 3), "does not contain 3")
+    }
+
+    new TestSets {
+      val s = union(s2, s3)
+      assert(!contains(s, 1), "does not contain 1")
+      assert(contains(s, 2), "contains 2")
+      assert(contains(s, 3), "contains 3")
+
     }
   }
-
-
 }
