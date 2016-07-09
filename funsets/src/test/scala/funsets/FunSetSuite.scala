@@ -136,4 +136,11 @@ class FunSetSuite extends FunSuite {
       assertContains(diff(s12, s13), List(2), List(1,3))
     }
   }
+
+  test("filter removes elements not passed by predicate") {
+    new TestSets {
+      assertContains(filter(s12, x => x == 2), List(2), List(1,3))
+      assertContains(filter(s12, x => x == 1), List(1), List(2,3))
+    }
+  }
 }
