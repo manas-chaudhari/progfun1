@@ -145,4 +145,20 @@ class FunSetSuite extends FunSuite {
       assert(!contains(s, 2), "doesn't contain 2")
     }
   }
+
+  test("diff contains elements not in intersection") {
+    new TestSets {
+      val s = diff(s12, s23)
+      assert(contains(s, 1), "contains 1")
+      assert(!contains(s, 2), "doesn't contain 2")
+      assert(!contains(s, 3), "doesn't contain 3")
+    }
+
+    new TestSets {
+      val s = diff(s12, s13)
+      assert(contains(s, 2), "contains 2")
+      assert(!contains(s, 1), "doesn't contain 1")
+      assert(!contains(s, 3), "doesn't contain 3")
+    }
+  }
 }
