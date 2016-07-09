@@ -143,4 +143,11 @@ class FunSetSuite extends FunSuite {
       assertContains(filter(s12, x => x == 1), List(1), List(2,3))
     }
   }
+
+  test("forAll checks predicate for all elements") {
+    new TestSets {
+      assert(forall(s12, x => x < 3), "All elements < 3")
+      assert(!forall(s12, x => x < 2), "All elements < 2")
+    }
+  }
 }
